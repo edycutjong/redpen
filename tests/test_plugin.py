@@ -596,6 +596,12 @@ class TestRedPenMainLoop(unittest.TestCase):
 
 
 class TestRedPenExtraCoverage(unittest.TestCase):
+    def setUp(self):
+        self.orig_write = plugin.write_jsonrpc_response
+
+    def tearDown(self):
+        plugin.write_jsonrpc_response = self.orig_write
+
     def test_get_or_create_signing_key_nonexistent_and_errors(self):
         # 1. Nonexistent key file
         orig_key_file = plugin.KEY_FILE
