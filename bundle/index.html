@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="RedPen — AI Contract Redliner. Clause-by-clause risk analysis with Ed25519 cryptographic signing.">
+  <title>RedPen — AI Contract Redliner</title>
+  <link rel="icon" type="image/svg+xml" href="./icon.svg">
+  <link rel="apple-touch-icon" href="./apple-touch-icon.png">
+  <meta name="theme-color" content="#FF3344">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-wrapper">
+    <!-- Top Header -->
+    <header class="header-bar">
+      <div class="logo-section">
+        <svg class="logo-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none" stroke="currentColor" stroke-width="32">
+          <path d="M256,70 L390,130 L390,290 C390,380 256,442 256,442 C256,442 122,380 122,290 L122,130 Z" stroke="#FF3344" stroke-width="36" />
+          <path d="M256,150 L315,220 L256,340 L197,220 Z" fill="#FF3344" />
+        </svg>
+        <span class="logo-text">RedPen</span>
+        <span class="tagline-span">AI CONTRACT AUDITOR</span>
+      </div>
+      
+      <div style="display: flex; gap: 8px; margin-left: auto; margin-right: 16px;">
+        <button id="nav-workspace-btn" class="btn-secondary" style="padding: 6px 12px; font-size: 12px; font-family: var(--font-mono)">📂 Workspace</button>
+        <button id="nav-anna-console-btn" class="btn-secondary" style="padding: 6px 12px; font-size: 12px; font-family: var(--font-mono); border-color: var(--accent); color: var(--text-hi);">🎮 Anna Console</button>
+      </div>
+
+      <div class="status-badge" id="host-connection-badge">
+        <span class="status-dot mock" id="status-dot"></span>
+        <span id="connection-status-text">STANDALONE (MOCK)</span>
+      </div>
+    </header>
+    
+    <!-- Main Content Panel -->
+    <main class="main-content">
+      
+      <!-- 1. Upload Screen -->
+      <section class="screen active" id="screen-upload">
+        <div class="upload-screen">
+          <div class="editor-card">
+            <div class="editor-header">
+              <span class="editor-title">Paste Contract Agreement</span>
+              <a class="editor-action-link" id="load-sample-link">Load Standard Contractor Agreement</a>
+            </div>
+            
+            <textarea class="editor-textarea" id="contract-textarea" placeholder="Paste your contractor, vendor, or lease agreement text here to begin clause-by-clause auditing..."></textarea>
+            
+            <div class="editor-footer">
+              <span class="word-count" id="word-count-label">0 words</span>
+              <button class="btn-primary" id="analyze-btn" disabled>Analyze Agreement</button>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- 2. Analyzing Screen -->
+      <section class="screen" id="screen-analyzing">
+        <div class="analyzing-screen">
+          <div class="loader-container">
+            <div class="spinner"></div>
+            <div class="progress-text" id="progress-text">Splitting document...</div>
+          </div>
+          
+          <div class="progress-bar-wrap">
+            <div class="progress-bar" id="progress-bar"></div>
+          </div>
+          
+          <div class="terminal-box" id="terminal-console">
+            [SYS] Initializing parser...<br>
+          </div>
+        </div>
+      </section>
+      
+      <!-- 3. Review Queue Screen -->
+      <section class="screen" id="screen-review">
+        <div class="review-screen">
+          <!-- Sidebar -->
+          <div class="review-sidebar">
+            <div class="sidebar-header">
+              <span class="sidebar-title">Clauses &amp; Risk</span>
+              <span class="word-count" id="reviewed-ratio">0 / 0</span>
+            </div>
+            <div class="sidebar-list" id="clauses-list">
+              <!-- Sidebar items populated dynamically -->
+            </div>
+          </div>
+          
+          <!-- Review main workspace -->
+          <div class="review-main">
+            <div class="review-header">
+              <h2 class="review-section-title" id="active-clause-title">Clause 1: Title</h2>
+              <span class="risk-badge critical" id="active-risk-badge">CRITICAL</span>
+            </div>
+            
+            <div class="review-workspace">
+              <!-- Risk details -->
+              <div class="risk-desc-box">
+                <span class="risk-desc-title">Risk Analysis &amp; Rationale</span>
+                <span class="risk-desc-body" id="active-risk-rationale">Loading analysis...</span>
+                <span class="risk-norm" id="active-risk-norm">Comparing to industry standards...</span>
+              </div>
+              
+              <!-- Split card original vs alternative -->
+              <div class="split-card-container">
+                <div class="comparison-card original">
+                  <div class="card-header-label">Original Text (Plaintext)</div>
+                  <div class="card-body-text" id="original-clause-text">...</div>
+                </div>
+                
+                <div class="comparison-card alternative">
+                  <div class="card-header-label">RedPen Alternative Proposed</div>
+                  <textarea class="card-body-textarea" id="alternative-clause-textarea">...</textarea>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Legal Advisor Live Chat -->
+            <div class="chat-drawer">
+              <div class="chat-messages" id="chat-console">
+                <div class="chat-bubble agent">
+                  Hello! I am your RedPen AI Legal Negotiator. You can ask me to soften, modify, or rewrite this clause in real-time.
+                </div>
+              </div>
+              
+              <div class="chat-input-row">
+                <input type="text" class="chat-input" id="chat-input-field" placeholder="Ask Legal Advisor to rewrite this clause (e.g. 'make this mutual')...">
+                <button class="chat-send-btn" id="chat-send-btn">REWRITE</button>
+              </div>
+            </div>
+            
+            <!-- Review Queue Actions -->
+            <div class="review-actions">
+              <button class="btn-secondary" id="keep-original-btn">Keep Original (1)</button>
+              <button class="btn-success" id="accept-alt-btn">Accept Alternative (2)</button>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- 4. Export Screen -->
+      <section class="screen" id="screen-export">
+        <div class="export-screen">
+          <h2><span class="text-gradient">Review Completed</span></h2>
+          
+          <div class="stats-summary-row">
+            <div class="stats-card">
+              <span class="stats-label">Clauses Audited</span>
+              <span class="stats-value" id="stats-total">10</span>
+            </div>
+            <div class="stats-card">
+              <span class="stats-label">Risks Mitigated</span>
+              <span class="stats-value" id="stats-mitigated">5</span>
+            </div>
+            <div class="stats-card">
+              <span class="stats-label">Cryptographic Status</span>
+              <span class="stats-value" style="font-size: 20px; color: var(--color-success); margin-top: 12px;">Ed25519 Signed</span>
+            </div>
+          </div>
+          
+          <div class="outputs-row">
+            <!-- Memo -->
+            <div class="memo-box">
+              <div class="output-header">
+                <span>Executive Summary Memo</span>
+                <span class="signature-badge">Verified Signature</span>
+              </div>
+              <div class="output-content" id="memo-output-content">Loading summary...</div>
+            </div>
+            
+            <!-- Final Contract -->
+            <div class="doc-box">
+              <div class="output-header">
+                <span>Redlined Contract Document</span>
+                <a class="editor-action-link" id="copy-doc-link">Copy Text</a>
+              </div>
+              <div class="output-content code" id="doc-output-content">Loading document...</div>
+            </div>
+          </div>
+          
+          <div class="actions-footer">
+            <button class="btn-secondary" id="start-over-btn">Start Over</button>
+            <div style="display: flex; gap: 16px;">
+              <button class="btn-secondary" id="download-txt-btn">Download .txt</button>
+              <button class="btn-primary" id="upload-r2-btn">Upload &amp; Share Report</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= ANNA DEV CONSOLE VIEW ================= -->
+      <section class="screen" id="screen-console" style="padding: 24px;">
+        <div style="margin:0 0 16px;padding:12px 16px;border:1px solid rgba(255,255,255,0.12);border-radius:10px;background:rgba(255,255,255,0.03);font-size:12px;line-height:1.55;color:#9aa7b8;">
+          <strong style="color:#e6edf3;">🛠️ Developer Console</strong> — a live playground that exercises the Anna Host-API surface (tools · storage · chat · agent sessions · image · upload). Inside the Anna host these route to the <strong style="color:#e6edf3;">real platform</strong>; running <strong style="color:#e6edf3;">standalone</strong> (see badge), calls return clearly-labeled <code style="background:rgba(255,255,255,0.08);padding:1px 5px;border-radius:4px;">mock</code> responses so you can preview the flow without an account.
+        </div>
+        <div class="console-layout">
+          <!-- Left: SDK Capabilities Sandbox -->
+          <div class="console-left">
+            
+            <!-- 1. Agent Sessions Controller -->
+            <div class="console-card glass-panel" style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-subtle); border-radius: var(--radius-12); padding: 16px; margin-bottom: 8px;">
+              <h3 style="font-family: var(--font-display); font-size: 14px; margin-top: 0; color: var(--accent);">1. Agent Sessions (L2 multi-turn)</h3>
+              <div class="console-grid">
+                <div>
+                  <label style="font-size: 11px; color: var(--text-mid);">Session Label</label>
+                  <input type="text" id="sdk-agent-label" class="console-input" value="RedPen Sandbox Session">
+                </div>
+                <div>
+                  <label style="font-size: 11px; color: var(--text-mid);">TTL Seconds</label>
+                  <input type="number" id="sdk-agent-ttl" class="console-input" value="600">
+                </div>
+              </div>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px;">
+                <button id="sdk-agent-create" class="btn-secondary" style="font-size: 11px; padding: 6px 10px;">Create</button>
+                <button id="sdk-agent-run" class="btn-secondary" style="font-size: 11px; padding: 6px 10px;" disabled>Run Turn</button>
+                <button id="sdk-agent-cancel" class="btn-secondary" style="font-size: 11px; padding: 6px 10px;" disabled>Cancel</button>
+                <button id="sdk-agent-history" class="btn-secondary" style="font-size: 11px; padding: 6px 10px;" disabled>History</button>
+                <button id="sdk-agent-refresh" class="btn-secondary" style="font-size: 11px; padding: 6px 10px;" disabled>Refresh TTL</button>
+                <button id="sdk-agent-list" class="btn-secondary" style="font-size: 11px; padding: 6px 10px;">List</button>
+                <button id="sdk-agent-delete" class="btn-secondary" style="font-size: 11px; padding: 6px 10px;" disabled>Delete</button>
+              </div>
+              <div id="sdk-agent-chat-area" style="display: none; margin-top: 8px; border: 1px solid var(--border-subtle); border-radius: var(--radius-8); padding: 8px; background: rgba(0,0,0,0.2);">
+                <div id="sdk-agent-messages" style="height: 120px; overflow-y: auto; font-size: 12px; margin-bottom: 8px; display: flex; flex-direction: column; gap: 4px;"></div>
+                <div style="display: flex; gap: 8px;">
+                  <input type="text" id="sdk-agent-input" class="console-input" style="margin-bottom: 0;" placeholder="Prompt the session agent...">
+                  <button id="sdk-agent-send" class="btn-primary" style="font-size: 11px; padding: 6px 12px;">Send</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. AI Media & Vision Studio -->
+            <div class="console-card glass-panel" style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-subtle); border-radius: var(--radius-12); padding: 16px; margin-bottom: 8px;">
+              <h3 style="font-family: var(--font-display); font-size: 14px; margin-top: 0; color: var(--primary);">2. AI Image Generator & Editor</h3>
+              <input type="text" id="sdk-image-prompt" class="console-input" value="Sleek legal contract shield logo, corporate red accent">
+              <div class="console-grid">
+                <div>
+                  <label style="font-size: 11px; color: var(--text-mid);">Size</label>
+                  <select id="sdk-image-size" class="console-input" style="background: #000; border: 1px solid var(--border-subtle); color: #fff;">
+                    <option value="1024x1024">1024x1024</option>
+                    <option value="512x512">512x512</option>
+                  </select>
+                </div>
+                <div>
+                  <label style="font-size: 11px; color: var(--text-mid);">Image URL (for Edit)</label>
+                  <input type="text" id="sdk-image-url" class="console-input" placeholder="Optional: Edit URL">
+                </div>
+              </div>
+              <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                <button id="sdk-image-generate" class="btn-primary" style="font-size: 11px; padding: 6px 10px;">Generate Image</button>
+                <button id="sdk-image-edit" class="btn-secondary" style="font-size: 11px; padding: 6px 10px;">Edit Image (Inpaint)</button>
+              </div>
+              <div id="sdk-image-result" style="display: none; text-align: center; margin-top: 8px;">
+                <img id="sdk-image-img" style="max-width: 100%; max-height: 150px; border-radius: var(--radius-8); border: 1px solid var(--primary);" src="" alt="SDK Visual">
+              </div>
+            </div>
+
+            <!-- 3. Embeddings & Semantic Similarity -->
+            <div class="console-card glass-panel" style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-subtle); border-radius: var(--radius-12); padding: 16px; margin-bottom: 8px;">
+              <h3 style="font-family: var(--font-display); font-size: 14px; margin-top: 0; color: var(--color-info);">3. LLM Embeddings & complete</h3>
+              <textarea id="sdk-embed-text" class="console-textarea" placeholder="Enter text to embed or pass to LLM complete..."></textarea>
+              <div style="display: flex; gap: 8px;">
+                <button id="sdk-embed-btn" class="btn-secondary" style="font-size: 11px; padding: 6px 10px;">Embed Text</button>
+                <button id="sdk-complete-btn" class="btn-primary" style="font-size: 11px; padding: 6px 10px;">LLM Complete</button>
+              </div>
+              <div id="sdk-embed-result" style="display: none; font-family: var(--font-mono); font-size: 10px; color: var(--text-mid); margin-top: 8px; white-space: pre-wrap; word-break: break-all; max-height: 80px; overflow-y: auto;"></div>
+            </div>
+
+            <!-- 4. Durable File Vault & KV Store -->
+            <div class="console-card glass-panel" style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-subtle); border-radius: var(--radius-12); padding: 16px; margin-bottom: 8px;">
+              <h3 style="font-family: var(--font-display); font-size: 14px; margin-top: 0; color: var(--color-success);">4. APS Durable Storage & Uploads</h3>
+              <div class="console-grid">
+                <div>
+                  <label style="font-size: 11px; color: var(--text-mid);">KV Key</label>
+                  <input type="text" id="sdk-kv-key" class="console-input" value="redpen_setting">
+                </div>
+                <div>
+                  <label style="font-size: 11px; color: var(--text-mid);">KV Value</label>
+                  <input type="text" id="sdk-kv-val" class="console-input" value="active">
+                </div>
+              </div>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px;">
+                <button id="sdk-kv-get" class="btn-secondary" style="font-size: 11px; padding: 6px 10px;">KV Get</button>
+                <button id="sdk-kv-set" class="btn-secondary" style="font-size: 11px; padding: 6px 10px; color: var(--color-success);">KV Set</button>
+                <button id="sdk-kv-delete" class="btn-secondary" style="font-size: 11px; padding: 6px 10px; color: var(--color-error);">KV Delete</button>
+                <button id="sdk-kv-list" class="btn-secondary" style="font-size: 11px; padding: 6px 10px;">KV List Prefix</button>
+              </div>
+              <div style="border-top: 1px solid var(--border-subtle); padding-top: 8px; margin-top: 8px;">
+                <label style="font-size: 11px; color: var(--text-mid);">Negotiated Upload File</label>
+                <input type="file" id="sdk-upload-file" class="console-input">
+                <button id="sdk-upload-btn" class="btn-primary" style="font-size: 11px; padding: 6px 10px; width: 100%; justify-content: center;">Start Negotiated Upload</button>
+              </div>
+            </div>
+
+            <!-- 5. Egress & Window Controls -->
+            <div class="console-card glass-panel" style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-subtle); border-radius: var(--radius-12); padding: 16px; margin-bottom: 8px;">
+              <h3 style="font-family: var(--font-display); font-size: 14px; margin-top: 0; color: var(--color-warning);">5. Window, Tools List & Chat Egress</h3>
+              <div class="console-grid">
+                <div>
+                  <label style="font-size: 11px; color: var(--text-mid);">Window Title</label>
+                  <input type="text" id="sdk-win-title" class="console-input" value="RedPen Pro Auditor">
+                </div>
+                <div>
+                  <label style="font-size: 11px; color: var(--text-mid);">View Name</label>
+                  <input type="text" id="sdk-win-view" class="console-input" value="clause_review">
+                </div>
+              </div>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px;">
+                <button id="sdk-win-title-btn" class="btn-secondary" style="font-size: 11px; padding: 6px 10px;">Set Title</button>
+                <button id="sdk-win-open-btn" class="btn-secondary" style="font-size: 11px; padding: 6px 10px;">Open View</button>
+                <button id="sdk-win-close-btn" class="btn-secondary" style="font-size: 11px; padding: 6px 10px; color: var(--color-error)">Close Window</button>
+                <button id="sdk-tools-list-btn" class="btn-secondary" style="font-size: 11px; padding: 6px 10px;">List Executa Tools</button>
+              </div>
+              <div style="border-top: 1px solid var(--border-subtle); padding-top: 8px; margin-top: 8px;">
+                <input type="text" id="sdk-chat-msg" class="console-input" value="RedPen contract review completed.">
+                <div style="display: flex; gap: 8px;">
+                  <button id="sdk-chat-msg-btn" class="btn-secondary" style="font-size: 11px; padding: 6px 10px; flex-grow: 1; justify-content: center;">Write to Chat</button>
+                  <button id="sdk-chat-artifact-btn" class="btn-primary" style="font-size: 11px; padding: 6px 10px; flex-grow: 1; justify-content: center;">Append Artifact</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right: Running SDK Log & Terminal -->
+          <div class="console-right">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <h3 style="font-family: var(--font-display); font-size: 14px; margin: 0; color: var(--primary);">Live SDK Event Stream</h3>
+              <button id="console-clear-logs" class="btn-secondary" style="font-size: 11px; padding: 4px 8px;">Clear Logs</button>
+            </div>
+            <div id="sdk-log-box" class="console-log-box">
+              <div class="log-entry">
+                <span class="log-time">[00:00:00]</span>
+                <span class="log-method">SYSTEM</span>: Console initialized. Awaiting API triggers...
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

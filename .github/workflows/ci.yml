@@ -1,0 +1,120 @@
+name: RedPen CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ── STAGE 1: Code Quality ─────────────────────────────────
+  python-quality:
+    name: "Stage 1 · Python Code Quality & Tests"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+      - name: Install dependencies
+        run: |
+          pip install cryptography pytest pytest-cov
+          pip install -e executas/redpen/
+      - name: Run Unit Tests
+        run: |
+          python3 -m unittest tests/test_plugin.py
+
+  # ── STAGE 2: Security Scans ───────────────────────────────
+  security-scans:
+    name: "Stage 2 · Security Audits & TruffleHog"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: TruffleHog Secret Scan
+        uses: trufflesecurity/trufflehog@main
+        with:
+          extra_args: --only-verified
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Pip dependency security audit
+        run: |
+          pip install pip-audit
+          pip-audit -r executas/redpen/pyproject.toml || true
+
+  # ── STAGE 3: Benchmarking ─────────────────────────────────
+  benchmarks:
+    name: "Stage 3 · Latency & Recall Benchmarks"
+    needs: [python-quality]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          pip install cryptography
+          pip install -e executas/redpen/
+      - name: Run Benchmarks
+        run: |
+          python3 scripts/bench.py
+
+  # ── STAGE 4: Offline Air-Gap Verification ─────────────────
+  offline-verification:
+    name: "Stage 4 · Air-Gapped Verification"
+    needs: [benchmarks]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          pip install cryptography
+          pip install -e executas/redpen/
+      - name: Run Air-Gapped Verification
+        run: |
+          python3 scripts/verify_offline.py
+
+  # ── STAGE 5: UI Integrity (Vite SPA static asset sanity) ──
+  ui-integrity:
+    name: "Stage 5 · UI Assets Integration Check"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Validate bundle file structure
+        run: |
+          test -f bundle/index.html
+          test -f bundle/app.js
+          test -f bundle/styles.css
+          test -f manifest.json
+          test -f app.json
+
+  # ── STAGE 6: Deploy Gate ──────────────────────────────────
+  deploy-gate:
+    name: "Stage 6 · Production Deploy Gate"
+    needs: [python-quality, security-scans, benchmarks, offline-verification, ui-integrity]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - name: Report Success
+        run: |
+          echo "🚀 All RedPen CI/CD gates successfully passed!"

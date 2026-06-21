@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="RedPen">
+  <defs>
+    <linearGradient id="rp-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1a0c10"/>
+      <stop offset="1" stop-color="#2a0f0a"/>
+    </linearGradient>
+    <linearGradient id="rp-body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#ffe7ea"/>
+    </linearGradient>
+    <linearGradient id="rp-cap" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FF9900"/>
+      <stop offset="1" stop-color="#ff6a00"/>
+    </linearGradient>
+    <radialGradient id="rp-glow" cx="0.5" cy="0.42" r="0.62">
+      <stop offset="0" stop-color="#FF3344" stop-opacity="0.4"/>
+      <stop offset="1" stop-color="#FF3344" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="512" height="512" rx="116" fill="url(#rp-bg)"/>
+  <rect width="512" height="512" rx="116" fill="url(#rp-glow)"/>
+
+  <!-- redline that keeps writing itself (full at rest) -->
+  <path d="M126 408 q44 30 96 8 q52 -22 100 6 q34 20 66 -4" fill="none" stroke="#FF3344" stroke-width="13" stroke-linecap="round" stroke-dasharray="360 380">
+    <animate attributeName="stroke-dashoffset" values="0;0;360;0" keyTimes="0;0.25;0.55;1" dur="3s" repeatCount="indefinite" calcMode="spline" keySplines="0 0 1 1;0.6 0 0.9 0.3;0.2 0.7 0.3 1"/>
+  </path>
+
+  <!-- bouncy pen (squash + jaunty tilt around the nib) -->
+  <g transform="translate(256 382)">
+    <g>
+      <animateTransform attributeName="transform" type="scale" additive="sum" values="1 1;0.95 1.09;1.10 0.90;1.02 0.99;1 1" keyTimes="0;0.34;0.6;0.82;1" dur="2.3s" repeatCount="indefinite" calcMode="spline" keySplines="0.2 0.6 0.35 1;0.5 0 0.8 0.4;0.2 0.7 0.4 1;0.4 0 0.4 1"/>
+      <animateTransform attributeName="transform" type="rotate" additive="sum" values="0;-4;3;-1;0" keyTimes="0;0.34;0.6;0.82;1" dur="2.3s" repeatCount="indefinite" calcMode="spline" keySplines="0.3 0 0.3 1;0.3 0 0.3 1;0.3 0 0.3 1;0.3 0 0.3 1"/>
+      <g transform="translate(-256 -382)">
+        <animateTransform attributeName="transform" type="translate" additive="sum" values="0 0;0 -30;0 0;0 -9;0 0" keyTimes="0;0.34;0.6;0.82;1" dur="2.3s" repeatCount="indefinite" calcMode="spline" keySplines="0.2 0.6 0.35 1;0.5 0 0.8 0.4;0.2 0.7 0.4 1;0.4 0 0.4 1"/>
+
+        <!-- nib -->
+        <path d="M212 318 h88 l-44 64 z" fill="#FF3344"/>
+        <path d="M256 318 v64" stroke="#a51326" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="256" cy="378" r="5" fill="#ffd1d6"/>
+        <rect x="208" y="306" width="96" height="18" rx="8" fill="#e2e8f0"/>
+
+        <!-- body -->
+        <rect x="206" y="150" width="100" height="164" rx="46" fill="url(#rp-body)"/>
+        <rect x="222" y="166" width="14" height="120" rx="7" fill="#ffffff" opacity="0.7"/>
+
+        <!-- cap + clip -->
+        <path d="M206 196 a46 46 0 0 1 92 0 v8 h-92 z" fill="url(#rp-cap)"/>
+        <path d="M206 150 m46 0 a46 46 0 0 1 46 46 h-12 a34 34 0 0 0 -34 -34 z" fill="url(#rp-cap)"/>
+        <rect x="248" y="150" width="14" height="58" rx="7" fill="#ff6a00"/>
+
+        <!-- cheeks -->
+        <circle cx="222" cy="252" r="11" fill="#FF3344" opacity="0.35"/>
+        <circle cx="290" cy="252" r="11" fill="#FF3344" opacity="0.35"/>
+
+        <!-- eyes (blink) -->
+        <ellipse cx="238" cy="244" rx="10" ry="11" fill="#27121a">
+          <animate attributeName="ry" values="11;11;1.4;11;11" keyTimes="0;0.85;0.9;0.95;1" dur="3.4s" repeatCount="indefinite"/>
+        </ellipse>
+        <ellipse cx="274" cy="244" rx="10" ry="11" fill="#27121a">
+          <animate attributeName="ry" values="11;11;1.4;11;11" keyTimes="0;0.85;0.9;0.95;1" dur="3.4s" repeatCount="indefinite"/>
+        </ellipse>
+        <circle cx="241" cy="240" r="3.3" fill="#fff"/>
+        <circle cx="277" cy="240" r="3.3" fill="#fff"/>
+
+        <!-- smile -->
+        <path d="M244 260 q12 11 24 0" fill="none" stroke="#27121a" stroke-width="5" stroke-linecap="round">
+          <animate attributeName="d" values="M244 260 q12 11 24 0;M244 258 q12 15 24 0;M244 260 q12 11 24 0" keyTimes="0;0.34;1" dur="2.3s" repeatCount="indefinite"/>
+        </path>
+      </g>
+    </g>
+  </g>
+
+  <!-- sparkles -->
+  <path d="M132 150 l5 13 13 5 -13 5 -5 13 -5 -13 -13 -5 13 -5z" fill="#FF9900"><animate attributeName="opacity" values="0.2;1;0.2" dur="2.1s" repeatCount="indefinite"/></path>
+  <path d="M392 168 l4 10 10 4 -10 4 -4 10 -4 -10 -10 -4 10 -4z" fill="#FF3344"><animate attributeName="opacity" values="0.2;1;0.2" dur="2.1s" begin="1s" repeatCount="indefinite"/></path>
+</svg>

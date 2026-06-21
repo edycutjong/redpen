@@ -1,0 +1,14 @@
+{
+  "name": "redpen",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AI contract redliner — Anna App",
+  "scripts": {
+    "dev": "anna-app dev",
+    "validate": "anna-app validate",
+    "test": "uv run --project executas/redpen --with pytest python -m pytest tests/ -q"
+  },
+  "devDependencies": {
+    "@anna-ai/cli": "latest"
+  }
+}
