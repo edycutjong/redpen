@@ -43,5 +43,5 @@ tmp/
 *.log
 
 # Asset exporter dependencies
-docs/assets/node_modules/
+docs/assets
 redpen_demo.mp4
