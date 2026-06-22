@@ -1,0 +1,11 @@
+{
+  "$schema": "anna-executas-lock/v1",
+  "host": "https://anna.partners",
+  "executas": {
+    "redpen": {
+      "tool_id": "tool-edycutjong-redpen-8e7dgabc",
+      "path": "./executas/redpen",
+      "source": "cut"
+    }
+  }
+}

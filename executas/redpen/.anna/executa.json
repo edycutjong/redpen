@@ -1,0 +1,9 @@
+{
+  "$schema": "anna-executa-identity/v1",
+  "host": "https://anna.partners",
+  "executa_id": 1065,
+  "tool_id": "tool-edycutjong-redpen-8e7dgabc",
+  "slug": "redpen",
+  "executa_type": "tool",
+  "first_published_at": "2026-06-22T02:23:28.394Z"
+}

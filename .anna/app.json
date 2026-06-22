@@ -1,0 +1,8 @@
+{
+  "$schema": "anna-app-identity/v1",
+  "host": "https://anna.partners",
+  "app_id": 122,
+  "slug": "redpen",
+  "handle": "edycutjong",
+  "first_published_at": "2026-06-22T02:23:36.604Z"
+}

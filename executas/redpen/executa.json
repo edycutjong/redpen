@@ -5,7 +5,7 @@
   "executa_type": "tool",
   "description": "Clause-by-clause contract parser, risk analyzer, and redline generator with AES-GCM-256 session envelopes, Ed25519 audit signatures, APS KV audit trail persistence, and R2 artifact upload.",
 
-  "tool_id": "tool-dev-redpen",
+  "tool_id": "tool-edycutjong-redpen-8e7dgabc",
   "type": "python",
   "enabled": true,
 
