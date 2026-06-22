@@ -45,3 +45,9 @@ tmp/
 # Asset exporter dependencies
 docs/assets
 redpen_demo.mp4
+
+# Build and packaging directories
+build/
+dist/
+dist-anna/
+*.spec
