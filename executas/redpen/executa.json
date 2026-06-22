@@ -26,18 +26,18 @@
         "binary_urls": {
           "darwin-arm64": {
             "url": "https://github.com/edycutjong/redpen/releases/download/v1.2.3/tool-edycutjong-redpen-8e7dgabc-darwin-arm64.tar.gz",
-            "size": 11924400,
-            "sha256": "2d31cab2ae054f2cbb8a9121fe7786b555ba656c5d545a1b124bfe35bc15e836"
+            "size": 11923862,
+            "sha256": "2de1d4d2d3b3ec45a0e66cce05f46861a79fb55f73344f7f47fc3955fbd15715"
           },
           "darwin-x86_64": {
             "url": "https://github.com/edycutjong/redpen/releases/download/v1.2.3/tool-edycutjong-redpen-8e7dgabc-darwin-x86_64.tar.gz",
-            "size": 12831984,
-            "sha256": "9cece14ef83feadbf157e60c9012a0a9067d62444439a49cf0ef1df52380d17a"
+            "size": 12831185,
+            "sha256": "2b439b11a785cb035b631dec9b82d868f02325c61e50def63a0c05449b88a37b"
           },
           "linux-x86_64": {
             "url": "https://github.com/edycutjong/redpen/releases/download/v1.2.3/tool-edycutjong-redpen-8e7dgabc-linux-x86_64.tar.gz",
-            "size": 22347546,
-            "sha256": "484ef099e1110459cc8451d836256edec6e8bb85402ec3584e9b89133dd3a36b"
+            "size": 22343503,
+            "sha256": "b97885744d69247302e3f035731aac6929e7084fc43f1db206706fb1ade245ef"
           }
         }
       }
