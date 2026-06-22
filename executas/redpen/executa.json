@@ -1,7 +1,7 @@
 {
   "slug": "redpen",
   "name": "RedPen Contract Auditor",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "executa_type": "tool",
   "description": "Clause-by-clause contract parser, risk analyzer, and redline generator with AES-GCM-256 session envelopes, Ed25519 audit signatures, APS KV audit trail persistence, and R2 artifact upload.",
 
@@ -25,17 +25,17 @@
         "capabilities": ["contract.parse", "contract.analyze", "contract.generateRedline"],
         "binary_urls": {
           "darwin-arm64": {
-            "url": "https://github.com/edycutjong/redpen/releases/download/v1.2.1/tool-edycutjong-redpen-8e7dgabc-darwin-arm64.tar.gz",
+            "url": "https://github.com/edycutjong/redpen/releases/download/v1.2.3/tool-edycutjong-redpen-8e7dgabc-darwin-arm64.tar.gz",
             "size": 11924400,
             "sha256": "2d31cab2ae054f2cbb8a9121fe7786b555ba656c5d545a1b124bfe35bc15e836"
           },
           "darwin-x86_64": {
-            "url": "https://github.com/edycutjong/redpen/releases/download/v1.2.1/tool-edycutjong-redpen-8e7dgabc-darwin-x86_64.tar.gz",
+            "url": "https://github.com/edycutjong/redpen/releases/download/v1.2.3/tool-edycutjong-redpen-8e7dgabc-darwin-x86_64.tar.gz",
             "size": 12831984,
             "sha256": "9cece14ef83feadbf157e60c9012a0a9067d62444439a49cf0ef1df52380d17a"
           },
           "linux-x86_64": {
-            "url": "https://github.com/edycutjong/redpen/releases/download/v1.2.1/tool-edycutjong-redpen-8e7dgabc-linux-x86_64.tar.gz",
+            "url": "https://github.com/edycutjong/redpen/releases/download/v1.2.3/tool-edycutjong-redpen-8e7dgabc-linux-x86_64.tar.gz",
             "size": 22347546,
             "sha256": "484ef099e1110459cc8451d836256edec6e8bb85402ec3584e9b89133dd3a36b"
           }
