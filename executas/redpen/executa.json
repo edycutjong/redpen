@@ -22,7 +22,24 @@
       "binary": {
         "type": "binary",
         "supports_protocol": true,
-        "capabilities": ["contract.parse", "contract.analyze", "contract.generateRedline"]
+        "capabilities": ["contract.parse", "contract.analyze", "contract.generateRedline"],
+        "binary_urls": {
+          "darwin-arm64": {
+            "url": "https://github.com/edycutjong/redpen/releases/download/v1.2.1/tool-edycutjong-redpen-8e7dgabc-darwin-arm64.tar.gz",
+            "size": 11924519,
+            "sha256": "a163c6f64ee1ebd9552e23d4a0c320b99f93971e97ac4241166292319e49981e"
+          },
+          "darwin-x86_64": {
+            "url": "https://github.com/edycutjong/redpen/releases/download/v1.2.1/tool-edycutjong-redpen-8e7dgabc-darwin-x86_64.tar.gz",
+            "size": 12832038,
+            "sha256": "e37a308e026b13b299c29efcc4dc20f559d9cecc6a8fcfffc0d771a23fe2ad83"
+          },
+          "linux-x86_64": {
+            "url": "https://github.com/edycutjong/redpen/releases/download/v1.2.1/tool-edycutjong-redpen-8e7dgabc-linux-x86_64.tar.gz",
+            "size": 22347964,
+            "sha256": "8d12cfb33f12c788c42fb041ffb7f89b50cf197d82aebd7821111acc168cac1b"
+          }
+        }
       }
     }
   },
