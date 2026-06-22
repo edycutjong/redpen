@@ -155,7 +155,7 @@ wheels = [
 
 [[package]]
 name = "tool-edycutjong-redpen-8e7dgabc"
-version = "1.2.0"
+version = "1.2.1"
 source = { editable = "." }
 dependencies = [
     { name = "cryptography" },

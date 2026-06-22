@@ -1,7 +1,7 @@
 {
   "slug": "redpen",
   "name": "RedPen Contract Auditor",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "executa_type": "tool",
   "description": "Clause-by-clause contract parser, risk analyzer, and redline generator with AES-GCM-256 session envelopes, Ed25519 audit signatures, APS KV audit trail persistence, and R2 artifact upload.",
 
