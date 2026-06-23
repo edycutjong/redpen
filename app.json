@@ -1,7 +1,7 @@
 {
   "slug": "redpen",
   "name": "RedPen",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "tagline": "AI-powered confidential contract redliner with clause-by-clause risk auditing.",
   "description": "RedPen is a native Anna App that performs automated, clause-by-clause contract risk analysis. The AI behaves as a junior associate: it reads, classifies, risk-rates, and drafts safe alternatives — but the human retains final approval on every modification. Clauses are cryptographically processed locally inside the Executa sandbox with AES-GCM-256 to construct tamper-proof session envelopes, and final changes are signed using Ed25519 signatures to provide a verifiable audit trail.",
   "category": "productivity",

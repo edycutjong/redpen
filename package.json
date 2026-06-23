@@ -1,6 +1,6 @@
 {
   "name": "redpen",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "private": true,
   "description": "AI contract redliner — Anna App",
   "scripts": {
